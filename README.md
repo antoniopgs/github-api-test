@@ -1,5 +1,5 @@
 # Overview
-This script will automatically create:
+This project will automatically create:
 - New Issue
 - New Branch
 - New Implementation File
