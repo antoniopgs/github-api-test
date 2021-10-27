@@ -23,8 +23,8 @@ const createIssue = async (owner, repo, title, body) => {
     });
 
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}`);
-    console.log(`New Issue Number: ${response.data.number}\n`);
-    return response.data.number;
+    console.log(`New Issue URL: ${response.data.html_url}\n`);
+    return response.data.html_url;
 };
 
 const getMasterSha = async () => {
@@ -102,21 +102,23 @@ const createFile = async (owner, repo, branch, fileName, fileContent) => {
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createPR = async (owner, repo, head, body, maintainer_can_modify, draft, issue) => {
+const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_modify, draft) => {
     console.log("Creating Pull Request...");
 
     const url = `${baseUrl}/repos/${owner}/${repo}/pulls`;
+    const title = `Add ${issueTitle}`;
+    const body = `Issue: ${issueUrl}`;
 
     const json = {
         accept: "application/vnd.github.v3+json",
         owner: owner,
         repo: repo,
+        title: title,
         head: head,
         base: "master",
         body: body,
         maintainer_can_modify: maintainer_can_modify,
         draft: draft,
-        issue: issue
     }
 
     const response = await axios.post(url, json, {
@@ -133,22 +135,21 @@ const createAll = async () => {
         const owner = "antoniopgs";
         const repo = "api-test";
 
-        const issueTitle = "Proposal 1";
-        const issueBody = "Proposal 1 body";
+        const issueTitle = "Proposal 2";
+        const issueBody = "Proposal 2 body";
 
-        const branch = "proposal-1";
+        const branch = "proposal-2";
 
-        const fileName = "proposal1.md";
-        const fileContent = "Proposal 1 content";
+        const fileName = "proposal2.md";
+        const fileContent = "Proposal 2 content";
 
-        const prBody = "Pull Request body";
         const maintainerCanModify = false;
         const draft = false;
 
-        const issueNumber = await createIssue(owner, repo, issueTitle, issueBody);
+        const issueUrl = await createIssue(owner, repo, issueTitle, issueBody);
         await createBranch(owner, repo, branch);
         await createFile(owner, repo, branch, fileName, fileContent);
-        await createPR(owner, repo, branch, prBody, maintainerCanModify, draft, issueNumber);
+        await createPR(owner, repo, issueTitle, issueUrl, branch, maintainerCanModify, draft);
 
         console.log("All done!");
 
