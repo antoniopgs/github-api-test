@@ -20,7 +20,7 @@ const createIssue = async (owner, repo, title, body) => {
 
     const response = await axios.post(url, json, {
         headers: {
-            Authorization: `token ${process.env.API_TEST_TOKEN}`
+            Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
     });
 
@@ -47,7 +47,7 @@ const getMasterSha = async () => {
 
     const response = await axios.get(url, json, {
         headers: {
-            Authorization: `token ${process.env.API_TEST_TOKEN}`
+            Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
     });
 
@@ -71,7 +71,7 @@ const createBranch = async (owner, repo, branchName) => {
 
     const response = await axios.post(url, json, {
         headers: {
-            Authorization: `token ${process.env.API_TEST_TOKEN}`
+            Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
     });
 
@@ -97,7 +97,7 @@ const createFile = async (owner, repo, branchName, fileName, fileContent) => {
 
     const response = await axios.put(url, json, {
         headers: {
-            Authorization: `token ${process.env.API_TEST_TOKEN}`
+            Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
     });
 
@@ -125,7 +125,7 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
 
     const response = await axios.post(url, json, {
         headers: {
-            Authorization: `token ${process.env.API_TEST_TOKEN}`
+            Authorization: `token ${process.env.ACCESS_TOKEN}`
         }
     });
 
