@@ -25,5 +25,6 @@ DAOCheckTool integration will be added later, to ensure DAOCheckTool + `json` = 
 - `json` (json for the DAOCheckTool)
 
 # How to use
-1. Edit the vars in `/src/app.js`
-2. Run `node src/app.js` in your terminal
+1. Create a `.env` file in the root directory (similar to `.env.example`) with your GitHub Access Token. The token must have access to the repo you are trying to modify.
+2. Edit the vars in `/src/app.js`
+3. Run `node src/app.js` in your terminal
