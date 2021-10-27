@@ -130,19 +130,8 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createAll = async () => {
+const createAll = async (owner, repo, issueTitle, issueBody, branch, fileName, fileContent) => {
     try {
-        const owner = "antoniopgs";
-        const repo = "api-test";
-
-        const issueTitle = "Proposal 2";
-        const issueBody = "Proposal 2 body";
-
-        const branch = "proposal-2";
-
-        const fileName = "proposal2.md";
-        const fileContent = "Proposal 2 content";
-
         const maintainerCanModify = false;
         const draft = false;
 
@@ -158,4 +147,15 @@ const createAll = async () => {
     }
 }
 
-createAll();
+const owner = "antoniopgs";
+const repo = "api-test";
+
+const issueTitle = "Proposal 3";
+const issueBody = "Proposal 3 body";
+
+const branchName = "proposal-3";
+
+const fileName = "proposal3.md";
+const fileContent = "Proposal 3 content";
+
+createAll(owner, repo, issueTitle, issueBody, branchName, fileName, fileContent);
