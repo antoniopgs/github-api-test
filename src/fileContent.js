@@ -1,25 +1,25 @@
-const getFileContent = (proposalNumber, proposalTitle, issueUrl, discussion) => {
-    return `
-        # ${proposalNumber} - ${proposalTitle}
-        ${proposalDescription}
+const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion) => {
+return (
 
-        ## Issue Link
-        Issue: ${issueUrl}
+`# ${proposalNumber} - ${proposalTitle}
+${proposalDescription}
 
-        ## Implementation Discussion
-        ${discussion ? discussion : "N/A"}
+## Issue Link
+Issue: ${issueUrl}
 
-        ## Implementation
-        Targets: []
-        Data: []
+## Implementation Discussion
+${discussion ? discussion : "N/A"}
 
-        ## Generation Code
-        {code}
+## Implementation
+Targets: []
+Data: []
 
-        Generated using the following function call(s) and the DAOCheck tool
-        {json}
+## Generation Code
+{code}
 
-    `
-};
+Generated using the following function call(s) and the DAOCheck tool
+{json}`
+
+)};
 
 module.exports = getFileContent;

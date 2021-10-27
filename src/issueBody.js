@@ -1,16 +1,17 @@
 const getIssueBody = (proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details = null) => {
-    return `
-        # ${proposalNumber} - ${proposalTitle}
-        ${proposalDescription}
+return (
 
-        ## Links
-        [Discourse EOI](${discourseEoiUrl})
-        [Discourse Proposal](${discourseProposalUrl})
-        [Snapshot Vote](${snapshotVoteUrl})
+`# ${proposalNumber} - ${proposalTitle}
+${proposalDescription}
 
-        ## Extra Details Needed for implementation
-        ${details ? details : "N/A"}
-    `
-}
+## Links
+[Discourse EOI](${discourseEoiUrl})
+[Discourse Proposal](${discourseProposalUrl})
+[Snapshot Vote](${snapshotVoteUrl})
+
+## Extra Details Needed for implementation
+${details ? details : "N/A"}`
+
+)}
 
 module.exports = getIssueBody;

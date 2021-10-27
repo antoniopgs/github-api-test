@@ -132,12 +132,20 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createAll = async (owner, repo, issueTitle, issueBody, branchName, fileName, fileContent) => {
+const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion) => {
     try {
         const maintainerCanModify = false;
         const draft = false;
 
+        const issueBody = getIssueBody(proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details);
+        const issueTitle = `Proposal #${proposalNumber} - ${proposalTitle}`;
+        const branchName = proposalTitle.toLowerCase().replace(/ /g, "-");
+        const fileName = `${proposalNumber}-${branchName}.md`;
+
         const issueUrl = await createIssue(owner, repo, issueTitle, issueBody);
+
+        const fileContent = getFileContent(proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion);
+
         await createBranch(owner, repo, branchName);
         await createFile(owner, repo, branchName, fileName, fileContent);
         await createPR(owner, repo, issueTitle, issueUrl, branchName, maintainerCanModify, draft);
@@ -152,25 +160,15 @@ const createAll = async (owner, repo, issueTitle, issueBody, branchName, fileNam
 const owner = "antoniopgs";
 const repo = "github-api-test";
 
-const proposalNumber = 123;
-const proposalTitle = "Fund XYX";
-const proposalDescription = "Deploy Fund XYZ at address 0x123";
-const discourseEoiUrl = "https://www.example1.com";
-const discourseProposalUrl = "https://www.example2.com";
-const snapshotVoteUrl = "https://www.example3.com";
-const details = "Lorem Ipsum"; // issue details
-const issueUrl = ;
-const discussion = " Bla Bla"; // implementation details
+const proposalNumber = 999;
+const proposalTitle = "Fund ZZZ";
+const proposalDescription = "Deploy Fund ZZZ at address 0x999";
 
-const issueBody = getIssueBody(proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details);
-const fileContent = getFileContent(proposalNumber, proposalTitle, issueUrl, discussion);
-const issueTitle = `Proposal #${proposalNumber} - ${proposalTitle}`;
+const discourseEoiUrl = "https://www.example9a.com";
+const discourseProposalUrl = "https://www.example9b.com";
+const snapshotVoteUrl = "https://www.example9c.com";
 
-const branchName = proposalTitle.toLowerCase().replaceAll(" ", "-");
-const fileName = `${proposalNumber}-${branchName}.md`;
+const details = "Issue Bla Bla"; // issue details
+const discussion = "Implementation Bla Bla"; // implementation details
 
-
-
-
-
-createAll(owner, repo, issueTitle, issueBody, branchName, fileName, fileContent);
+createAll(owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion);
