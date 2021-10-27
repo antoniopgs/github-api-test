@@ -3,9 +3,9 @@ const createAll = require("./utils/create");
 const owner = "antoniopgs";
 const repo = "github-api-test";
 
-const proposalNumber = 333;
-const proposalTitle = "Fund CCC";
-const proposalDescription = "Deploy Fund CCC at address 0x333";
+const proposalNumber = 555;
+const proposalTitle = "Fund EEE";
+const proposalDescription = "Deploy Fund EEE at address 0x555";
 
 const discourseEoiUrl = "https://www.example1.com";
 const discourseProposalUrl = "https://www.example1.com";
@@ -14,7 +14,7 @@ const snapshotVoteUrl = "https://www.example1.com";
 const details = "Issue Bla Bla"; // issue details
 const discussion = "Implementation Bla Bla"; // implementation details
 
-const implement = () => {
+function implement() {
     console.log("Lorem Ipsum");
 }
 
@@ -40,4 +40,4 @@ const json = {
     ] 
 };
 
-createAll(owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, json);
+createAll(owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, implement, json);

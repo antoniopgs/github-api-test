@@ -1,4 +1,4 @@
-const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, json) => {
+const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, code, json) => {
     return (
 
 `# ${proposalNumber} - ${proposalTitle}
@@ -15,7 +15,9 @@ Targets: []
 Data: []
 
 ## Generation Code
-{code}
+\`\`\`javascript
+${code.toString()}
+\`\`\`
 
 Generated using the following function call(s) and the DAOCheck tool:
 \`\`\`json
