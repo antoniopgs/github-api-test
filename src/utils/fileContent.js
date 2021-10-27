@@ -1,5 +1,5 @@
-const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion) => {
-return (
+const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, json) => {
+    return (
 
 `# ${proposalNumber} - ${proposalTitle}
 ${proposalDescription}
@@ -17,9 +17,12 @@ Data: []
 ## Generation Code
 {code}
 
-Generated using the following function call(s) and the DAOCheck tool
-{json}`
+Generated using the following function call(s) and the DAOCheck tool:
+\`\`\`json
+${JSON.stringify(json, null, 4)}
+\`\`\``
 
-)};
+    )
+};
 
 module.exports = getFileContent;
