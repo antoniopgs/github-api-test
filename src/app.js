@@ -18,8 +18,8 @@ const implementArgs = { // edit the key value pairs
     bar: "world"
 };
 
-function implement(implementArgs) { // must return object with targets array and data array
-    console.log(`${foo}, ${bar}!`);
+function implement(args) { // must return object with targets array and data array
+    console.log(`${args.foo}, ${args.bar}!`);
 
     return {
         targets: [1, 2, 3],
