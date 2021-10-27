@@ -1,11 +1,12 @@
-const Web3 = require("web3");
 const axios = require("axios");
 require("dotenv").config();
 
-const web3 = new Web3();
+const baseUrl = "https://api.github.com";
 
 const createIssue = async (owner, repo, title, body) => {
-    const url = `https://api.github.com/repos/${owner}/${repo}/issues`;
+    console.log("Creating Issue...");
+
+    const url = `${baseUrl}/repos/${owner}/${repo}/issues`;
 
     const json = {
         accept: "application/vnd.github.v3+json",
@@ -21,82 +22,139 @@ const createIssue = async (owner, repo, title, body) => {
         }
     });
 
-    console.log(response.status, response.statusText);
-    //console.log("Data:", response.data);
-    console.log("New Issue URL:", response.data.html_url);
-    return response.data.html_url;
+    console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}`);
+    console.log(`New Issue Number: ${response.data.number}\n`);
+    return response.data.number;
 };
 
-const createBranch = async (ref) => {
-    try {
-        const owner = "antoniopgs";
-        const repo = "api-test";
-        const sha = web3.utils.sha3(ref);
-        const slicedSha = sha.slice(2, 42);
+const getMasterSha = async () => {
+    console.log("Getting Master Sha...");
 
-        const url = `https://api.github.com/repos/${owner}/${repo}/git/refs`;
+    const owner = "antoniopgs";
+    const repo = "api-test";
+    const ref = "heads/master";
 
-        const json = {
-            accept: "application/vnd.github.v3+json",
-            owner: owner,
-            repo: repo,
-            ref: `refs/heads/${ref}`,
-            sha: slicedSha,
-        };
+    const url = `${baseUrl}/repos/${owner}/${repo}/git/ref/${ref}`;
 
-        const response = await axios.post(url, json, {
-            headers: {
-                Authorization: `token ${process.env.API_TEST_TOKEN}`
-            }
-        });
-
-        console.log(response.status, response.statusText);
-
-    } catch (err) {
-        console.error(`Status Code: ${err.response.status} | Status Msg: ${err.response.statusText} | Msg: ${err.response.data.message}`);
+    const json = {
+        accept: "application/vnd.github.v3+json",
+        owner: owner,
+        repo: repo,
+        ref: ref
     }
-}
 
-const createFile = () => {
-
-}
-
-const createPR = async (owner, repo, title, head, base, body, maintainer_can_modify, draft, issue) => {
-    try {
-        const url = `https://api.github.com/repos/${owner}/${repo}/pulls`;
-
-        const json = {
-            accept: "application/vnd.github.v3+json",
-            owner: owner,
-            repo: repo,
-            //title: title,
-            head: head,
-            base: base,
-            body: body,
-            maintainer_can_modify: maintainer_can_modify,
-            draft: draft,
-            issue: issue
+    const response = await axios.get(url, json, {
+        headers: {
+            Authorization: `token ${process.env.API_TEST_TOKEN}`
         }
+    });
 
-        const response = await axios.post(url, json, {
-            headers: {
-                Authorization: `token ${process.env.API_TEST_TOKEN}`
-            }
-        });
-        console.log(response.status, response.statusText);
-        //console.log("Data:", response.data);
+    console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}`);
+    console.log(`Master Sha: ${response.data.object.sha}\n`);
+    return response.data.object.sha;
+}
 
-    } catch (err) {
-        console.error(`Status Code: ${err.response.status} | Status Msg: ${err.response.statusText} | Msg: ${err.response.data.message}`);
+const createBranch = async (owner, repo, branchName) => {
+    console.log("Creating Branch...");
+
+    const url = `${baseUrl}/repos/${owner}/${repo}/git/refs`;
+
+    const json = {
+        accept: "application/vnd.github.v3+json",
+        owner: owner,
+        repo: repo,
+        ref: `refs/heads/${branchName}`,
+        sha: await getMasterSha(),
+    };
+
+    const response = await axios.post(url, json, {
+        headers: {
+            Authorization: `token ${process.env.API_TEST_TOKEN}`
+        }
+    });
+
+    console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
+}
+
+const createFile = async (owner, repo, branch, fileName, fileContent) => {
+    console.log("Creating File...");
+
+    const commitMessage = `Add ${fileName}`;
+
+    const url = `${baseUrl}/repos/${owner}/${repo}/contents/${fileName}`;
+
+    const json = {
+        accept: "application/vnd.github.v3+json",
+        owner: owner,
+        repo: repo,
+        path: fileName,
+        message: commitMessage,
+        content: Buffer.from(fileContent).toString('base64'),
+        branch: branch
     }
+
+    const response = await axios.put(url, json, {
+        headers: {
+            Authorization: `token ${process.env.API_TEST_TOKEN}`
+        }
+    });
+
+    console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
+}
+
+const createPR = async (owner, repo, head, body, maintainer_can_modify, draft, issue) => {
+    console.log("Creating Pull Request...");
+
+    const url = `${baseUrl}/repos/${owner}/${repo}/pulls`;
+
+    const json = {
+        accept: "application/vnd.github.v3+json",
+        owner: owner,
+        repo: repo,
+        head: head,
+        base: "master",
+        body: body,
+        maintainer_can_modify: maintainer_can_modify,
+        draft: draft,
+        issue: issue
+    }
+
+    const response = await axios.post(url, json, {
+        headers: {
+            Authorization: `token ${process.env.API_TEST_TOKEN}`
+        }
+    });
+
+    console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
 const createAll = async () => {
+    try {
+        const owner = "antoniopgs";
+        const repo = "api-test";
 
-    const issueUrl = await createIssue("antoniopgs", "api-test", "New Issue XXX", "Lorem Ipsum 123");
-    //await createPR(issueUrl);
+        const issueTitle = "Proposal 1";
+        const issueBody = "Proposal 1 body";
+
+        const branch = "proposal-1";
+
+        const fileName = "proposal1.md";
+        const fileContent = "Proposal 1 content";
+
+        const prBody = "Pull Request body";
+        const maintainerCanModify = false;
+        const draft = false;
+
+        const issueNumber = await createIssue(owner, repo, issueTitle, issueBody);
+        await createBranch(owner, repo, branch);
+        await createFile(owner, repo, branch, fileName, fileContent);
+        await createPR(owner, repo, branch, prBody, maintainerCanModify, draft, issueNumber);
+
+        console.log("All done!");
+
+    } catch (err) {
+        console.error(`Status Code: ${err.response.status} | Status Msg: ${err.response.statusText} | Msg: ${err.response.data.message}`);
+    }
 }
 
-//createIssue("antoniopgs", "api-test", "New Issue XXX", "Lorem Ipsum 123");
-//createPR("antoniopgs", "api-test", "new 2", "branch-1", "master", "Bla", false, false, 5);
-createBranch("branch-2");
+createAll();
