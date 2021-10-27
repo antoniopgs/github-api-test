@@ -1,4 +1,4 @@
-const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, code, json) => {
+const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json) => {
     return (
 
 `# ${proposalNumber} - ${proposalTitle}
@@ -16,6 +16,8 @@ Data: []
 
 ## Generation Code
 \`\`\`javascript
+const implementArgs = ${JSON.stringify(codeArgs, null, 4)}
+
 ${code.toString()}
 \`\`\`
 
