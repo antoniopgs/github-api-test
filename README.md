@@ -22,7 +22,7 @@ DAOCheckTool integration will be added later, to ensure DAOCheckTool + `json` = 
 - `discussion` (implementation details)
 - `implementArgs` (implementation function arguments)
 - `implement()` (implementation function)
-- `json`(json for the DAOCheckTool)
+- `json` (json for the DAOCheckTool)
 
 # How to use
 1. Edit the vars in `/src/app.js`
