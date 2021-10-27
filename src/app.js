@@ -1,5 +1,7 @@
-const axios = require("axios");
 require("dotenv").config();
+const axios = require("axios");
+const getIssueBody = require("./issueBody");
+const getFileContent = require("./fileContent");
 
 const baseUrl = "https://api.github.com";
 
@@ -76,7 +78,7 @@ const createBranch = async (owner, repo, branchName) => {
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createFile = async (owner, repo, branch, fileName, fileContent) => {
+const createFile = async (owner, repo, branchName, fileName, fileContent) => {
     console.log("Creating File...");
 
     const commitMessage = `Add ${fileName}`;
@@ -90,7 +92,7 @@ const createFile = async (owner, repo, branch, fileName, fileContent) => {
         path: fileName,
         message: commitMessage,
         content: Buffer.from(fileContent).toString('base64'),
-        branch: branch
+        branch: branchName
     }
 
     const response = await axios.put(url, json, {
@@ -107,7 +109,7 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
 
     const url = `${baseUrl}/repos/${owner}/${repo}/pulls`;
     const title = `Add ${issueTitle}`;
-    const body = `Issue: ${issueUrl}`;
+    const body = `# Proposal Number - Proposal Title\nIssue: ${issueUrl}`;
 
     const json = {
         accept: "application/vnd.github.v3+json",
@@ -130,15 +132,15 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createAll = async (owner, repo, issueTitle, issueBody, branch, fileName, fileContent) => {
+const createAll = async (owner, repo, issueTitle, issueBody, branchName, fileName, fileContent) => {
     try {
         const maintainerCanModify = false;
         const draft = false;
 
         const issueUrl = await createIssue(owner, repo, issueTitle, issueBody);
-        await createBranch(owner, repo, branch);
-        await createFile(owner, repo, branch, fileName, fileContent);
-        await createPR(owner, repo, issueTitle, issueUrl, branch, maintainerCanModify, draft);
+        await createBranch(owner, repo, branchName);
+        await createFile(owner, repo, branchName, fileName, fileContent);
+        await createPR(owner, repo, issueTitle, issueUrl, branchName, maintainerCanModify, draft);
 
         console.log("All done!");
 
@@ -148,14 +150,27 @@ const createAll = async (owner, repo, issueTitle, issueBody, branch, fileName, f
 }
 
 const owner = "antoniopgs";
-const repo = "api-test";
+const repo = "github-api-test";
 
-const issueTitle = "Proposal 3";
-const issueBody = "Proposal 3 body";
+const proposalNumber = 123;
+const proposalTitle = "Fund XYX";
+const proposalDescription = "Deploy Fund XYZ at address 0x123";
+const discourseEoiUrl = "https://www.example1.com";
+const discourseProposalUrl = "https://www.example2.com";
+const snapshotVoteUrl = "https://www.example3.com";
+const details = "Lorem Ipsum"; // issue details
+const issueUrl = ;
+const discussion = " Bla Bla"; // implementation details
 
-const branchName = "proposal-3";
+const issueBody = getIssueBody(proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details);
+const fileContent = getFileContent(proposalNumber, proposalTitle, issueUrl, discussion);
+const issueTitle = `Proposal #${proposalNumber} - ${proposalTitle}`;
 
-const fileName = "proposal3.md";
-const fileContent = "Proposal 3 content";
+const branchName = proposalTitle.toLowerCase().replaceAll(" ", "-");
+const fileName = `${proposalNumber}-${branchName}.md`;
+
+
+
+
 
 createAll(owner, repo, issueTitle, issueBody, branchName, fileName, fileContent);
