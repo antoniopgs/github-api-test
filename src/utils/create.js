@@ -134,6 +134,12 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
 
 const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, code, json) => {
     try {
+        /*
+        if (implement() !== daoCheckTool(json)) {
+            throw new Error("implement() does not match DAOCheckTool json output");
+        }
+        */
+
         const maintainerCanModify = false;
         const draft = false;
 

@@ -46,12 +46,6 @@ const json = {
     ] 
 };
 
-/*
-if (implement(implementArgs) !== daoCheckTool) {
-    throw new Error("implementation does not match DAOCheckTool json output");
-}
-*/
-
 // ----- DO NOT CHANGE -----
 const createAll = require("./utils/create");
 createAll(
