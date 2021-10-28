@@ -1,4 +1,4 @@
-const getFileContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json) => {
+const getImplementationContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json) => {
     return (
 
 `# ${proposalNumber} - ${proposalTitle}
@@ -29,4 +29,4 @@ ${JSON.stringify(json, null, 4)}
     )
 };
 
-module.exports = getFileContent;
+module.exports = getImplementationContent;

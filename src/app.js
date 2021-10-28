@@ -2,16 +2,16 @@
 const owner = "antoniopgs";
 const repo = "github-api-test";
 
-const proposalNumber = 8;
-const proposalTitle = "Fund H";
-const proposalDescription = "Deploy Fund H at address 0x8";
+const proposalNumber = 666;
+const proposalTitle = "Fund 666";
+const proposalDescription = "Deploy Fund 666 at address 0x666";
 
 const discourseEoiUrl = "https://www.example1.com";
 const discourseProposalUrl = "https://www.example1.com";
 const snapshotVoteUrl = "https://www.example1.com";
 
-const details = "Issue Bla Bla"; // issue details
-const discussion = "Implementation Bla Bla"; // implementation details
+const issueDetails = "Issue Bla Bla";
+const implementationDiscussion = "Implementation Bla Bla";
 
 const implementArgs = { // edit the key value pairs
     foo: "Hello", 
@@ -57,4 +57,18 @@ if (implement(implementArgs) !== daoCheckTool) {
 
 // ----- DO NOT CHANGE -----
 const createAll = require("./utils/create");
-createAll(owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, implementArgs, implement, json);
+createAll(
+    owner,
+    repo,
+    proposalNumber,
+    proposalTitle,
+    proposalDescription,
+    discourseEoiUrl,
+    discourseProposalUrl,
+    snapshotVoteUrl,
+    issueDetails,
+    implementationDiscussion,
+    implementArgs,
+    implement,
+    json
+);

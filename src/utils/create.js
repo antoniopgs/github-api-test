@@ -1,7 +1,7 @@
 require("dotenv").config();
 const axios = require("axios");
 const getIssueBody = require("./issueBody");
-const getFileContent = require("./fileContent");
+const getImplementationContent = require("./implementationContent");
 
 const baseUrl = "https://api.github.com";
 
@@ -78,20 +78,20 @@ const createBranch = async (owner, repo, branchName) => {
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createFile = async (owner, repo, branchName, fileName, fileContent) => {
+const createImplementation = async (owner, repo, branchName, implementationName, implementationContent) => {
     console.log("Creating File...");
 
-    const commitMessage = `Add ${fileName}`;
+    const commitMessage = `Add ${implementationName}`;
 
-    const url = `${baseUrl}/repos/${owner}/${repo}/contents/${fileName}`;
+    const url = `${baseUrl}/repos/${owner}/${repo}/contents/${implementationName}`;
 
     const json = {
         accept: "application/vnd.github.v3+json",
         owner: owner,
         repo: repo,
-        path: fileName,
+        path: implementationName,
         message: commitMessage,
-        content: Buffer.from(fileContent).toString('base64'),
+        content: Buffer.from(implementationContent).toString('base64'),
         branch: branchName
     }
 
@@ -137,17 +137,17 @@ const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDes
         const maintainerCanModify = false;
         const draft = false;
 
-        const issueBody = getIssueBody(proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details);
         const issueTitle = `Proposal #${proposalNumber} - ${proposalTitle}`;
-        const branchName = proposalTitle.toLowerCase().replace(/ /g, "-");
-        const fileName = `${proposalNumber}-${branchName}.md`;
-
+        const issueBody = getIssueBody(proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details);
         const issueUrl = await createIssue(owner, repo, issueTitle, issueBody);
 
-        const fileContent = getFileContent(proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json);
-
+        const branchName = proposalTitle.toLowerCase().replace(/ /g, "-");
         await createBranch(owner, repo, branchName);
-        await createFile(owner, repo, branchName, fileName, fileContent);
+
+        const implementationName = `${proposalNumber}-${branchName}.md`;
+        const implementationContent = getImplementationContent(proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json);
+        await createImplementation(owner, repo, branchName, implementationName, implementationContent);
+
         await createPR(owner, repo, issueTitle, issueUrl, branchName, maintainerCanModify, draft);
 
         console.log("All done!");
