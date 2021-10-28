@@ -1,4 +1,4 @@
-const getImplementationContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, code, json) => {
+const getImplementationContent = (proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, targets, data, code, json) => {
     return (
 
 `# ${proposalNumber} - ${proposalTitle}
@@ -11,8 +11,9 @@ Issue: ${issueUrl}
 ${discussion ? discussion : "N/A"}
 
 ## Implementation
-Targets: []
-Data: []
+Targets: [${targets}]
+
+Data: [${data}]
 
 ## Generation Code
 \`\`\`javascript

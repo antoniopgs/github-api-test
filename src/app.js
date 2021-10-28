@@ -2,9 +2,9 @@
 const repoOwner = "antoniopgs";
 const repoName = "github-api-test";
 
-const proposalNumber = 666;
-const proposalTitle = "Fund 666";
-const proposalDescription = "Deploy Fund 666 at address 0x666";
+const proposalNumber = 909;
+const proposalTitle = "Fund zaz";
+const proposalDescription = "Deploy Fund cba at address 0x000";
 
 const discourseEoiUrl = "https://www.example1.com";
 const discourseProposalUrl = "https://www.example1.com";
@@ -13,7 +13,8 @@ const snapshotVoteUrl = "https://www.example1.com";
 const issueDetails = "Issue Bla Bla";
 const implementationDiscussion = "Implementation Bla Bla";
 
-function implement() { // must return object with targets array and data array
+// must return object with targets array and data array
+function implement() {
     console.log("Hello, world!");
 
     return {
@@ -22,7 +23,8 @@ function implement() { // must return object with targets array and data array
     }
 }
 
-const json = { // edit the calls array
+// edit the calls array
+const json = {
     "name": `${proposalTitle}`,
     "calls": [
         {
@@ -63,6 +65,8 @@ createAll(
     snapshotVoteUrl,
     issueDetails,
     implementationDiscussion,
+    implement().targets,
+    implement().data,
     implement,
     json
 );
