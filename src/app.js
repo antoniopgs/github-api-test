@@ -1,6 +1,6 @@
 // ----- EDIT VAR VALUES TO FIT YOUR NEEDS -----
-const owner = "antoniopgs";
-const repo = "github-api-test";
+const repoOwner = "antoniopgs";
+const repoName = "github-api-test";
 
 const proposalNumber = 666;
 const proposalTitle = "Fund 666";
@@ -58,8 +58,8 @@ if (implement(implementArgs) !== daoCheckTool) {
 // ----- DO NOT CHANGE -----
 const createAll = require("./utils/create");
 createAll(
-    owner,
-    repo,
+    repoOwner,
+    repoName,
     proposalNumber,
     proposalTitle,
     proposalDescription,
