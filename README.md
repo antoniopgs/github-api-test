@@ -10,8 +10,8 @@ This project will automatically create:
 DAOCheckTool integration will be added later, to ensure DAOCheckTool + `json` = `implement()`, before anything is created.
 
 # Needed Inputs
-- `repoOwner` (repo owner)
-- `repoName` (repo name)
+- `repoOwner`
+- `repoName`
 - `proposalNumber`
 - `proposalTitle`
 - `proposalDescription`
