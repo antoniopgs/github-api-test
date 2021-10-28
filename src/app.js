@@ -2,9 +2,9 @@
 const repoOwner = "antoniopgs";
 const repoName = "github-api-test";
 
-const proposalNumber = 909;
-const proposalTitle = "Fund zaz";
-const proposalDescription = "Deploy Fund cba at address 0x000";
+const proposalNumber = 818;
+const proposalTitle = "Fund byb";
+const proposalDescription = "Deploy Fund byb at address 0x000";
 
 const discourseEoiUrl = "https://www.example1.com";
 const discourseProposalUrl = "https://www.example1.com";
@@ -65,8 +65,6 @@ createAll(
     snapshotVoteUrl,
     issueDetails,
     implementationDiscussion,
-    implement().targets,
-    implement().data,
     implement,
     json
 );
