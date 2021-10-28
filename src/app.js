@@ -13,13 +13,8 @@ const snapshotVoteUrl = "https://www.example1.com";
 const issueDetails = "Issue Bla Bla";
 const implementationDiscussion = "Implementation Bla Bla";
 
-const implementArgs = { // edit the key value pairs
-    foo: "Hello", 
-    bar: "world"
-};
-
-function implement(args) { // must return object with targets array and data array
-    console.log(`${args.foo}, ${args.bar}!`);
+function implement() { // must return object with targets array and data array
+    console.log("Hello, world!");
 
     return {
         targets: [1, 2, 3],
@@ -68,7 +63,6 @@ createAll(
     snapshotVoteUrl,
     issueDetails,
     implementationDiscussion,
-    implementArgs,
     implement,
     json
 );

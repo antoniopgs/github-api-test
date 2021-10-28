@@ -132,7 +132,7 @@ const createPR = async (owner, repo, issueTitle, issueUrl, head, maintainer_can_
     console.log(`Status Code: ${response.status} | Status Msg: ${response.statusText}\n`);
 }
 
-const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, codeArgs, code, json) => {
+const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDescription, discourseEoiUrl, discourseProposalUrl, snapshotVoteUrl, details, discussion, code, json) => {
     try {
         const maintainerCanModify = false;
         const draft = false;
@@ -145,7 +145,7 @@ const createAll = async (owner, repo, proposalNumber, proposalTitle, proposalDes
         await createBranch(owner, repo, branchName);
 
         const implementationName = `${proposalNumber}-${branchName}.md`;
-        const implementationContent = getImplementationContent(proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, codeArgs, code, json);
+        const implementationContent = getImplementationContent(proposalNumber, proposalTitle, proposalDescription, issueUrl, discussion, code, json);
         await createImplementation(owner, repo, branchName, implementationName, implementationContent);
 
         await createPR(owner, repo, issueTitle, issueUrl, branchName, maintainerCanModify, draft);
