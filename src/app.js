@@ -47,8 +47,8 @@ const json = {
 };
 
 // ----- DO NOT CHANGE -----
-const createAll = require("./utils/create");
-createAll(
+const run = require("./utils/create");
+run(
     repoOwner,
     repoName,
     proposalNumber,
