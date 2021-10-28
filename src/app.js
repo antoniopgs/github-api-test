@@ -15,11 +15,12 @@ const implementationDiscussion = "Implementation Bla Bla";
 
 // must return object with targets array and data array
 function implement() {
-    console.log("Hello, world!");
+    const targets = [1, 2, 3];
+    const data = ["a", "b", "c"];
 
     return {
-        targets: [1, 2, 3],
-        data: ["a", "b", "c"]
+        targets: targets,
+        data: data
     }
 }
 
