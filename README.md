@@ -18,8 +18,8 @@ DAOCheckTool integration will be added later, to ensure DAOCheckTool + `json` = 
 - `discourseEoiUrl`
 - `discourseProposalUrl`
 - `snapshotVoteUrl`
-- `details` (issue details)
-- `discussion` (implementation details)
+- `issueDetails`
+- `implementationDiscussion`
 - `implementArgs` (implementation function arguments)
 - `implement()` (implementation function)
 - `json` (json for the DAOCheckTool)
